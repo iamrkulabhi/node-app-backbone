@@ -14,6 +14,7 @@ const db = require("./models");
 
 const PORT = process.env.PORT || 1234;
 const sessionSecret = process.env.sessionSecret || 'mysecretkey';
+const APP_NAME = process.env.APP_NAME || 'MY APP'
 const sessionStore = new SequelizeStore({db: db.sequelize})
 const app = express()
 
@@ -30,6 +31,7 @@ app.use(csrf())
 app.use((req, res, next) => {
     res.locals.isUserLoggedIn = req.session.loggedIn
     res.locals.csfrToken = req.csrfToken()
+    res.locals.appName = APP_NAME
     next()
 })
 app.use((req, res, next) => {
